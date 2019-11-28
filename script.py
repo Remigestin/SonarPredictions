@@ -22,11 +22,6 @@ clf = KNeighborsClassifier(n_neighbors=5, metric="minkowski", p=1)
 # Fit the model
 clf.fit(X_train, y_train)
 
-
-KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
-                     metric_params=None, n_jobs=None, n_neighbors=5, p=1,
-                     weights='uniform')
-
 # launch the prediction
 predicted = clf.predict(X_test)
 
