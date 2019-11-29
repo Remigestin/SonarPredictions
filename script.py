@@ -6,6 +6,10 @@ from sklearn.neighbors.classification import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 
+from IPython.display import Image
+from sklearn.tree import export_graphviz
+import pydotplus
+
 df = pd.read_csv("tutorial_data_eval_Sonar.csv", delimiter=';')
 
 # X = data without class
@@ -57,3 +61,9 @@ print("Confusion Matrix:")
 print(confusion_matrix(y_test, y_pred_tree))
 print("Classification Report:")
 print(classification_report(y_test, y_pred_tree))
+
+dot_data = export_graphviz(decisionTree,
+                filled=True, rounded=True,
+                special_characters=True)
+graph = pydotplus.graph_from_dot_data(dot_data)
+Image(graph.create_png())
