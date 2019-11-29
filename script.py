@@ -6,10 +6,6 @@ from sklearn.neighbors.classification import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 
-from IPython.display import Image
-from sklearn.tree import export_graphviz
-import pydotplus
-
 df = pd.read_csv("tutorial_data_eval_Sonar.csv", delimiter=';')
 
 # X = data without class
@@ -19,7 +15,7 @@ X = df.values[:, 0:-1].astype(float)
 y = df['Class'].copy()
 
 # we choose a test size of 30%, and not chosen randomly.
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
 # Set up the knn model with default values
 clf = KNeighborsClassifier(n_neighbors=5, metric="minkowski", p=1)
@@ -38,6 +34,7 @@ y_pred_lr = logreg.predict(X_test)
 y_pred_tree = decisionTree.predict(X_test)
 
 # results
+print("_______________KNN______________")
 print("Accuracy:")
 print(accuracy_score(y_test, y_pred_knn))
 print("Confusion Matrix:")
@@ -47,6 +44,7 @@ print(classification_report(y_test, y_pred_knn))
 
 
 # results
+print("_______________LOGISTIC REGRESSION______________")
 print("Accuracy:")
 print(accuracy_score(y_test, y_pred_lr))
 print("Confusion Matrix:")
@@ -55,15 +53,10 @@ print("Classification Report:")
 print(classification_report(y_test, y_pred_lr))
 
 # results
+print("_______________DECISION TREE______________")
 print("Accuracy:")
 print(accuracy_score(y_test, y_pred_tree))
 print("Confusion Matrix:")
 print(confusion_matrix(y_test, y_pred_tree))
 print("Classification Report:")
 print(classification_report(y_test, y_pred_tree))
-
-dot_data = export_graphviz(decisionTree,
-                filled=True, rounded=True,
-                special_characters=True)
-graph = pydotplus.graph_from_dot_data(dot_data)
-Image(graph.create_png())
